@@ -1,11 +1,12 @@
 import {useState} from 'react'
 
-function computeInitialCounter() {
-  console.log('Some calculations')
-  return Math.trunc(Math.random() * 20)
-}
 
 function App() {
+
+  function computeInitialCounter() {
+    console.log('Some calculations')
+    return Math.trunc(Math.random() * 20)
+  }
 
   // const [counter, setCounter] = useState(0)
   const [counter, setCounter] = useState(computeInitialCounter())
