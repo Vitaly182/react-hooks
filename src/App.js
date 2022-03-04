@@ -1,20 +1,42 @@
-import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react'
-import Alert from './context and reducer/Alert';
-import { AlertProvider } from './context and reducer/AlertContext';
-import Main from './context and reducer/Main';
+import { useEffect, useState } from "react";
 
 
+function useLogger(value) {
+  useEffect(() => {
+    console.log('Value changed', value);
+  })
+}
+
+function useInput(initialValue) {
+  const [value, setValue] = useState(initialValue)
+
+  const onChange = event => {
+    setValue(event.target.value)
+  }
+
+  const clear = () => setValue('')
+
+  return {
+    bind: {value, onChange},
+    value,
+    clear
+  }
+}
 
 
 function App() {
 
+  const input = useInput('')
+  const lastName = useInput('')
+
+
+  useLogger(input.value, lastName.value)
+
   return (
-    <AlertProvider >
-      <div className={'container pt-3'}>
-        <Alert />
-        <Main toggle = {() => {}} />
-      </div>
-    </AlertProvider>
+    <div className={'container pt-3'} >
+      <input type='text' {...input.bind}  />
+      <button className="btn btn-warning" onClick={() => input.clear()} >Очистить</button>
+    </div>
   );
 }
 
